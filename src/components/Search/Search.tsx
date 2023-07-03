@@ -15,6 +15,7 @@ const Search: React.FC<SearchProps> = ({ loading }) => {
       disabled={loading}
       bg={inputBgColor}
       color={inputColor}
+      mb="2"
     />
   );
 };

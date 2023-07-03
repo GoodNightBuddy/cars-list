@@ -13,7 +13,7 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react';
 import CarTableRow from './CarTableRow';
-import { Car, useAppSelector } from '../../store/types/types';
+import { useAppSelector } from '../../store/types/types';
 
 interface CarTableProps {
   currentPage: number;
@@ -27,7 +27,7 @@ const CarTable: React.FC<CarTableProps> = ({
   itemsPerPage,
 }) => {
   const rowBorderColor = useColorModeValue('gray.200', 'white');
-  const {cars, error, loading} = useAppSelector(state => state.cars);
+  const { cars, error, loading } = useAppSelector(state => state.cars);
 
   if (loading) {
     return (
@@ -49,6 +49,7 @@ const CarTable: React.FC<CarTableProps> = ({
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const displayedCars = cars.slice(startIndex, endIndex);
+  console.log(displayedCars)
 
   return (
     <Table
@@ -60,14 +61,30 @@ const CarTable: React.FC<CarTableProps> = ({
     >
       <Thead>
         <Tr>
-          <Th borderColor={rowBorderColor} width="15%">Company</Th>
-          <Th borderColor={rowBorderColor} width="15%">Model</Th>
-          <Th borderColor={rowBorderColor} width="10%">VIN</Th>
-          <Th borderColor={rowBorderColor} width="10%">Color</Th>
-          <Th borderColor={rowBorderColor} width="10%">Year</Th>
-          <Th borderColor={rowBorderColor} width="15%">Price</Th>
-          <Th borderColor={rowBorderColor} width="15%">Availability</Th>
-          <Th borderColor={rowBorderColor} width="10%">Actions</Th>
+          <Th borderColor={rowBorderColor} width="15%">
+            Company
+          </Th>
+          <Th borderColor={rowBorderColor} width="15%">
+            Model
+          </Th>
+          <Th borderColor={rowBorderColor} width="10%">
+            VIN
+          </Th>
+          <Th borderColor={rowBorderColor} width="10%">
+            Color
+          </Th>
+          <Th borderColor={rowBorderColor} width="10%">
+            Year
+          </Th>
+          <Th borderColor={rowBorderColor} width="15%">
+            Price
+          </Th>
+          <Th borderColor={rowBorderColor} width="15%">
+            Availability
+          </Th>
+          <Th borderColor={rowBorderColor} width="10%">
+            Actions
+          </Th>
         </Tr>
       </Thead>
       <Tbody h="100%">
@@ -75,7 +92,7 @@ const CarTable: React.FC<CarTableProps> = ({
           <CarTableRow
             key={car.id}
             car={car}
-            isLastRow={index === displayedCars.length - 1}
+            index={index}
           />
         ))}
       </Tbody>

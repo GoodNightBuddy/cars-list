@@ -1,7 +1,6 @@
 import { createReducer, isAnyOf } from "@reduxjs/toolkit";
 import { Car } from "../types/types";
-import { getCars } from "./actions";
-import { saveCarsToStorage } from "../../utils/storage/cars";
+import { addCar, editCar, getCars, removeCar } from "./actions";
 
 type InitialState = {
   cars: Car[];
@@ -18,7 +17,8 @@ const reducer = createReducer(initialState, (builder) => {
   builder
     .addMatcher(
       isAnyOf(
-        getCars.pending
+        getCars.pending,
+        editCar.pending
       ),
       state => {
         state.loading = true
@@ -32,7 +32,34 @@ const reducer = createReducer(initialState, (builder) => {
       (state, action) => {
         state.loading = false;
         state.cars = action.payload.cars;
-        saveCarsToStorage(action.payload.cars);
+      }
+    )
+
+    .addMatcher(
+      isAnyOf(
+        editCar.fulfilled,
+      ),
+      (state, action) => {
+        state.loading = false;
+        state.cars[action.payload.index] = action.payload.car;
+      }
+    )
+
+    .addMatcher(
+      isAnyOf(
+        addCar.fulfilled,
+      ),
+      (state, action) => {
+        state.loading = false;
+        state.cars.unshift(action.payload.car);
+      }
+    )
+
+    .addMatcher(
+      isAnyOf(removeCar.fulfilled),
+      (state, action) => {
+        state.loading = false;
+        state.cars = state.cars.filter((_, index) => index !== action.payload.index);
       }
     )
 
@@ -43,7 +70,7 @@ const reducer = createReducer(initialState, (builder) => {
       (state, action) => {
         state.loading = false;
         state.cars = [];
-        state.error =  new Error ('Error fetching cars');
+        state.error = new Error('Error fetching cars');
       }
     )
 })

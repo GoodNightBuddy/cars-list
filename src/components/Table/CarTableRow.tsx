@@ -1,33 +1,87 @@
-import React from 'react';
-import { Tr, Td, useColorModeValue } from '@chakra-ui/react';
+import React, { useState } from 'react';
+import {
+  Tr,
+  Td,
+  useColorModeValue,
+  IconButton,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+} from '@chakra-ui/react';
+import { FaEllipsisV, FaTrashAlt, FaEdit } from 'react-icons/fa';
+import { Car, useAppDispatch } from '../../store/types/types';
+import { carsActionCreator } from '../../store/action';
+import CarEditModal from '../CarEditModal/CarEditModal';
 
 interface CarTableRowProps {
-  car: {
-    id: number;
-    car: string;
-    car_model: string;
-    car_color: string;
-    car_model_year: number;
-    car_vin: string;
-    price: string;
-    availability: boolean;
-  };
-  isLastRow: boolean;
+  car: Car;
+  index: number;
 }
 
-const CarTableRow: React.FC<CarTableRowProps> = ({ car, isLastRow }) => {
+const CarTableRow: React.FC<CarTableRowProps> = ({ car, index }) => {
   const rowBorderColor = useColorModeValue('gray.200', 'white');
+  const [editModalOpen, setEditModalOpen] = useState(false);
+  const dispatch = useAppDispatch();
+
+  const handleDeleteClick = () => {
+    dispatch(carsActionCreator.removeCar(index));
+  };
+
+  const handleEditClick = () => {
+    setEditModalOpen(true);
+  };
+
+  const handleSaveEdit = (editedCar: Car) => {
+    setEditModalOpen(false);
+    dispatch(carsActionCreator.editCar({ car: editedCar, index }));
+  };
+
+  const handleCancelEdit = () => {
+    setEditModalOpen(false);
+  };
+
   return (
-    <Tr borderBottom="1px" borderColor={rowBorderColor}>
-      <Td borderBottom="none">{car.car}</Td>
-      <Td borderBottom="none">{car.car_model}</Td>
-      <Td borderBottom="none">{car.car_vin}</Td>
-      <Td borderBottom="none">{car.car_color}</Td>
-      <Td borderBottom="none">{car.car_model_year}</Td>
-      <Td borderBottom="none">{car.price}</Td>
-      <Td borderBottom="none">{car.availability ? 'Available' : 'Unavailable'}</Td>
-      <Td borderBottom="none">Actions</Td>
-    </Tr>
+    <>
+      <Tr borderBottom="1px" borderColor={rowBorderColor}>
+        <Td borderBottom="none">{car.car}</Td>
+        <Td borderBottom="none">{car.car_model}</Td>
+        <Td borderBottom="none">{car.car_vin}</Td>
+        <Td borderBottom="none">{car.car_color}</Td>
+        <Td borderBottom="none">{car.car_model_year}</Td>
+        <Td borderBottom="none">{car.price}</Td>
+        <Td borderBottom="none">
+          {car.availability ? 'Available' : 'Unavailable'}
+        </Td>
+        <Td borderBottom="none">
+          <Menu>
+            <MenuButton
+              as={IconButton}
+              icon={<FaEllipsisV />}
+              variant="ghost"
+              size="sm"
+              aria-label="Actions"
+            />
+            <MenuList>
+              <MenuItem icon={<FaEdit />} onClick={handleEditClick}>
+                Edit
+              </MenuItem>
+              <MenuItem icon={<FaTrashAlt />} onClick={handleDeleteClick}>
+                Delete
+              </MenuItem>
+            </MenuList>
+          </Menu>
+        </Td>
+      </Tr>
+      {editModalOpen && (
+        <CarEditModal
+          car={car}
+          index={index}
+          onSave={handleSaveEdit}
+          onClose={handleCancelEdit}
+        />
+      )}
+    </>
   );
 };
 
