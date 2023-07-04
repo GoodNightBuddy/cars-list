@@ -42,36 +42,37 @@ const CarTable: React.FC<CarTableProps> = ({
 
   return (
     <Table
-      size="md"
+      size="sm"
       h="600px"
       w="100%"
       borderWidth="1px"
       borderColor="gray.200"
+      layout="fixed"
     >
       <Thead>
         <Tr>
-          <Th borderColor={rowBorderColor} width="15%">
+          <Th borderColor={rowBorderColor} width="12%" paddingX="3">
             Company
           </Th>
-          <Th borderColor={rowBorderColor} width="15%">
+          <Th borderColor={rowBorderColor} width="13%" paddingX="3">
             Model
           </Th>
-          <Th borderColor={rowBorderColor} width="10%">
+          <Th borderColor={rowBorderColor} width="19%" paddingX="3">
             VIN
           </Th>
-          <Th borderColor={rowBorderColor} width="10%">
+          <Th borderColor={rowBorderColor} width="11%" paddingX="3">
             Color
           </Th>
-          <Th borderColor={rowBorderColor} width="10%">
+          <Th borderColor={rowBorderColor} width="7%" paddingX="3">
             Year
           </Th>
-          <Th borderColor={rowBorderColor} width="15%">
+          <Th borderColor={rowBorderColor} width="13%" paddingX="3">
             Price
           </Th>
-          <Th borderColor={rowBorderColor} width="15%">
+          <Th borderColor={rowBorderColor} width="15%" paddingX="3">
             Availability
           </Th>
-          <Th borderColor={rowBorderColor} width="10%">
+          <Th borderColor={rowBorderColor} width="10%" paddingX="3">
             Actions
           </Th>
         </Tr>

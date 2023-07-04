@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, ButtonGroup, Center, HStack } from '@chakra-ui/react';
+import { Button, ButtonGroup, Center, HStack, Text } from '@chakra-ui/react';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 
 interface CarTablePaginationProps {
@@ -23,7 +23,6 @@ const CarTablePagination: React.FC<CarTablePaginationProps> = ({
 
   return (
     <Center mt={4}>
-      <HStack spacing={2}>
         <ButtonGroup size="sm">
           <Button
             onClick={() => handlePageClick(currentPage - 1)}
@@ -32,7 +31,12 @@ const CarTablePagination: React.FC<CarTablePaginationProps> = ({
             <FaChevronLeft />
           </Button>
 
-          <Button onClick={onSelectPage}>Current Page: {currentPage}</Button>
+          <Button onClick={onSelectPage} w="40" >
+            <Text w="8">Page:</Text>
+            <Text w="8">{currentPage}</Text>
+            <Text w="4" mr="2">of: </Text>
+            <Text w="8">{totalPages}</Text>
+          </Button>
 
           <Button
             onClick={() => handlePageClick(currentPage + 1)}
@@ -41,7 +45,6 @@ const CarTablePagination: React.FC<CarTablePaginationProps> = ({
             <FaChevronRight />
           </Button>
         </ButtonGroup>
-      </HStack>
     </Center>
   );
 };

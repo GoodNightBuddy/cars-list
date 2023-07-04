@@ -105,7 +105,7 @@ const AddCarModal: React.FC<AddCarModalProps> = ({ onClose }) => {
 
   return (
     <Modal isOpen={true} onClose={handleClose}>
-      <ModalOverlay />
+      <ModalOverlay/>
       <ModalContent fontSize="sm" lineHeight="shorter">
         <ModalHeader>Add Car</ModalHeader>
         <ModalCloseButton />

@@ -62,13 +62,13 @@ const CarTableRow: React.FC<CarTableRowProps> = ({ car, index }) => {
   return (
     <>
       <Tr borderBottom="1px" borderColor={rowBorderColor}>
-        <Td borderBottom="none">{car.car}</Td>
-        <Td borderBottom="none">{car.car_model}</Td>
-        <Td borderBottom="none">{car.car_vin}</Td>
-        <Td borderBottom="none">{car.car_color}</Td>
-        <Td borderBottom="none">{car.car_model_year}</Td>
-        <Td borderBottom="none">{car.price}</Td>
-        <Td borderBottom="none">
+        <Td paddingY="0" paddingX="3" borderBottom="none">{car.car}</Td>
+        <Td paddingY="0" paddingX="3" borderBottom="none">{car.car_model}</Td>
+        <Td paddingY="0" paddingX="3" borderBottom="none">{car.car_vin}</Td>
+        <Td paddingY="0" paddingX="3" borderBottom="none">{car.car_color}</Td>
+        <Td paddingY="0" paddingX="3" borderBottom="none">{car.car_model_year}</Td>
+        <Td paddingY="0" paddingX="3" borderBottom="none">{car.price}</Td>
+        <Td paddingY="0" paddingX="3" borderBottom="none">
           {car.availability ? 'Available' : 'Unavailable'}
         </Td>
         <Td borderBottom="none">
