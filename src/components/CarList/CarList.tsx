@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Alert, AlertDescription, AlertIcon, Box, Grid, Spinner } from '@chakra-ui/react';
+import { Alert, AlertDescription, AlertIcon, Box, Grid, Spinner, Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalFooter, FormControl, FormLabel, Input } from '@chakra-ui/react';
 import { carsActionCreator } from '../../store/action';
 import { useAppDispatch, useAppSelector } from '../../store/types/types';
 import { saveCarsToStorage } from '../../utils/storage/cars';
@@ -20,7 +20,6 @@ export const CarList = () => {
     }
   }, [cars]);
 
-
   const currentCars = search ? search : cars;
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10; // Define the number of items per page here
@@ -30,18 +29,27 @@ export const CarList = () => {
     setCurrentPage(selectedPage);
   };
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedPageInput, setSelectedPageInput] = useState('');
+
   const handleSelectPage = () => {
-    const selectedPageInput = prompt('Enter a page number:');
-    if (selectedPageInput !== null) {
-      const selectedPage = parseInt(selectedPageInput, 10);
-      if (
-        !isNaN(selectedPage) &&
-        selectedPage >= 1 &&
-        selectedPage <= totalPages
-      ) {
-        setCurrentPage(selectedPage);
-      }
+    setIsModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleModalConfirm = () => {
+    const selectedPage = parseInt(selectedPageInput, 10);
+    if (
+      !isNaN(selectedPage) &&
+      selectedPage >= 1 &&
+      selectedPage <= totalPages
+    ) {
+      setCurrentPage(selectedPage);
     }
+    setIsModalOpen(false);
   };
 
   if (loading) {
@@ -75,6 +83,31 @@ export const CarList = () => {
         totalPages={totalPages}
         onSelectPage={handleSelectPage}
       />
+
+      <Modal isOpen={isModalOpen} onClose={handleModalClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Enter a page number</ModalHeader>
+          <ModalBody>
+            <FormControl>
+              <FormLabel>Page Number:</FormLabel>
+              <Input
+                type="number"
+                value={selectedPageInput}
+                onChange={(e) => setSelectedPageInput(e.target.value)}
+              />
+            </FormControl>
+          </ModalBody>
+          <ModalFooter>
+            <Button colorScheme="blue" onClick={handleModalConfirm}>
+              Confirm
+            </Button>
+            <Button variant="ghost" ml={3} onClick={handleModalClose}>
+              Cancel
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </Box>
   );
 };
