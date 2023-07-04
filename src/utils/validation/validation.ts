@@ -3,6 +3,26 @@ import { Car } from "../../store/types/types";
 const validateCar = (car: Car) => {
   const invalidFields: string[] = [];
 
+  if (!car.car) {
+    invalidFields.push('car');
+  }
+
+  if (!/^[a-zA-Z\s-]+$/.test(car.car)) {
+    invalidFields.push('car');
+  }
+
+  if (!car.car_model) {
+    invalidFields.push('car_model');
+  }
+
+  if (!car.car_vin) {
+    invalidFields.push('car_vin');
+  }
+
+  if (!/^[a-zA-Z0-9]+$/.test(car.car_vin)) {
+    invalidFields.push('car_vin');
+  }
+
   if (!car.car_color) {
     invalidFields.push('car_color');
   }

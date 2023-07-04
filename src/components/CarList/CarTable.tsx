@@ -5,51 +5,40 @@ import {
   Tbody,
   Tr,
   Th,
-  Spinner,
   Alert,
   AlertIcon,
   AlertDescription,
-  Grid,
   useColorModeValue,
 } from '@chakra-ui/react';
 import CarTableRow from './CarTableRow';
-import { useAppSelector } from '../../store/types/types';
+import { Car } from '../../store/types/types';
 
 interface CarTableProps {
+  cars: Car[];
   currentPage: number;
   itemsPerPage: number;
-  totalPages: number;
-  onPageChange: (selectedPage: number) => void;
 }
 
 const CarTable: React.FC<CarTableProps> = ({
   currentPage,
   itemsPerPage,
+  cars,
 }) => {
   const rowBorderColor = useColorModeValue('gray.200', 'white');
-  const { cars, error, loading } = useAppSelector(state => state.cars);
-
-  if (loading) {
-    return (
-      <Grid placeItems="center" h="100%">
-        <Spinner size="xl" />
-      </Grid>
-    );
-  }
-
-  if (error) {
-    return (
-      <Alert status="error">
-        <AlertIcon />
-        <AlertDescription>{error.message}</AlertDescription>
-      </Alert>
-    );
-  }
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const displayedCars = cars.slice(startIndex, endIndex);
-  console.log(displayedCars)
+
+  
+  if (!cars.length) {
+    return (
+      <Alert status="info">
+        <AlertIcon />
+        <AlertDescription>There are no cars yet</AlertDescription>
+      </Alert>
+    );
+  }
 
   return (
     <Table
@@ -89,11 +78,7 @@ const CarTable: React.FC<CarTableProps> = ({
       </Thead>
       <Tbody h="100%">
         {displayedCars.map((car, index) => (
-          <CarTableRow
-            key={car.id}
-            car={car}
-            index={index}
-          />
+          <CarTableRow key={car.id} car={car} index={index} />
         ))}
       </Tbody>
     </Table>

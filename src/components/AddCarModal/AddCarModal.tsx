@@ -85,8 +85,9 @@ const AddCarModal: React.FC<AddCarModalProps> = ({ onClose }) => {
       title: 'Car Added',
       description: 'The car has been successfully added.',
       status: 'success',
-      duration: 2000,
+      duration: 3000,
       isClosable: true,
+      position: 'top'
     });
 
     handleClose();

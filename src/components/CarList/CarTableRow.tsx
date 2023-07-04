@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import {
   Tr,
   Td,
@@ -8,6 +8,13 @@ import {
   MenuButton,
   MenuList,
   MenuItem,
+  AlertDialog,
+  AlertDialogOverlay,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogBody,
+  AlertDialogFooter,
+  Button,
 } from '@chakra-ui/react';
 import { FaEllipsisV, FaTrashAlt, FaEdit } from 'react-icons/fa';
 import { Car, useAppDispatch } from '../../store/types/types';
@@ -22,10 +29,17 @@ interface CarTableRowProps {
 const CarTableRow: React.FC<CarTableRowProps> = ({ car, index }) => {
   const rowBorderColor = useColorModeValue('gray.200', 'white');
   const [editModalOpen, setEditModalOpen] = useState(false);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const dispatch = useAppDispatch();
+  const cancelRef = useRef<HTMLButtonElement | null>(null);
 
   const handleDeleteClick = () => {
+    setDeleteModalOpen(true);
+  };
+
+  const handleDeleteConfirm = () => {
     dispatch(carsActionCreator.removeCar(index));
+    setDeleteModalOpen(false);
   };
 
   const handleEditClick = () => {
@@ -39,6 +53,10 @@ const CarTableRow: React.FC<CarTableRowProps> = ({ car, index }) => {
 
   const handleCancelEdit = () => {
     setEditModalOpen(false);
+  };
+
+  const handleCancelDelete = () => {
+    setDeleteModalOpen(false);
   };
 
   return (
@@ -81,6 +99,25 @@ const CarTableRow: React.FC<CarTableRowProps> = ({ car, index }) => {
           onClose={handleCancelEdit}
         />
       )}
+      <AlertDialog
+        isOpen={deleteModalOpen}
+        leastDestructiveRef={cancelRef}
+        onClose={handleCancelDelete}
+      >
+        <AlertDialogOverlay />
+        <AlertDialogContent>
+          <AlertDialogHeader>Delete Confirmation</AlertDialogHeader>
+          <AlertDialogBody>
+            Are you sure you want to delete this car?
+          </AlertDialogBody>
+          <AlertDialogFooter>
+            <Button onClick={handleCancelDelete} ref={cancelRef} >Cancel</Button>
+            <Button colorScheme="red" onClick={handleDeleteConfirm} ml={3}>
+              Delete
+            </Button>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </>
   );
 };
