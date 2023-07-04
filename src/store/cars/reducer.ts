@@ -61,7 +61,7 @@ const reducer = createReducer(initialState, (builder) => {
       isAnyOf(removeCar.fulfilled),
       (state, action) => {
         state.loading = false;
-        state.cars = state.cars.filter((_, index) => index !== action.payload.index);
+        state.cars = state.cars.filter((car) => car.id !== action.payload.id);
       }
     )
 

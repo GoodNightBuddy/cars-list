@@ -53,10 +53,10 @@ const addCar = createAsyncThunk<{ car: Car }, { car: Car }>(
   }
 );
 
-const removeCar = createAsyncThunk<{ index: number }, number>(
+const removeCar = createAsyncThunk<{ id: number }, number>(
   ActionType.DELETE_CAR,
-  async (index: number) => {
-    return { index };
+  async (id: number) => {
+    return { id };
   }
 );
 

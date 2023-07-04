@@ -38,7 +38,7 @@ const CarTableRow: React.FC<CarTableRowProps> = ({ car, index }) => {
   };
 
   const handleDeleteConfirm = () => {
-    dispatch(carsActionCreator.removeCar(index));
+    dispatch(carsActionCreator.removeCar(car.id));
     setDeleteModalOpen(false);
   };
 
