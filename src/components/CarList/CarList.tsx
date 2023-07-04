@@ -20,6 +20,10 @@ export const CarList = () => {
     }
   }, [cars]);
 
+  useEffect(() => {
+    setCurrentPage(1)
+  }, [search])
+
   const currentCars = search ? search : cars;
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10; // Define the number of items per page here

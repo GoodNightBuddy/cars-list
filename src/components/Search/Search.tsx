@@ -43,7 +43,7 @@ const Search: React.FC = () => {
 
     timeoutIdRef.current = setTimeout(() => {
       handleSearch(query);
-    }, 700);
+    }, 500);
   };
 
   return (
