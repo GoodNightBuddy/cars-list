@@ -1,17 +1,19 @@
 import { createReducer, isAnyOf } from "@reduxjs/toolkit";
 import { Car } from "../types/types";
-import { addCar, editCar, getCars, removeCar } from "./actions";
+import { addCar, editCar, getCars, removeCar, removeSearchResult, setSearchResult } from "./actions";
 
 type InitialState = {
   cars: Car[];
   loading: boolean;
   error: Error | null;
+  search: Car[] | null;
 }
 
 const initialState: InitialState = {
   cars: [],
   loading: false,
-  error: null
+  error: null,
+  search: null
 }
 const reducer = createReducer(initialState, (builder) => {
   builder
@@ -60,6 +62,22 @@ const reducer = createReducer(initialState, (builder) => {
       (state, action) => {
         state.loading = false;
         state.cars = state.cars.filter((_, index) => index !== action.payload.index);
+      }
+    )
+
+    .addMatcher(
+      isAnyOf(setSearchResult.fulfilled),
+      (state, action) => {
+        state.loading = false;
+        state.search = action.payload.search;
+      }
+    )
+
+    .addMatcher(
+      isAnyOf(removeSearchResult.fulfilled),
+      (state, action) => {
+        state.loading = false;
+        state.search = null;
       }
     )
 

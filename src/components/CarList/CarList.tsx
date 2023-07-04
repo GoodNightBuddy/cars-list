@@ -13,14 +13,18 @@ export const CarList = () => {
     dispatch(carsActionCreator.getCars());
   }, [dispatch]);
 
-  const { cars, loading, error } = useAppSelector(state => state.cars);
+  const { cars, loading, error, search } = useAppSelector(state => state.cars);
   useEffect(() => {
-    saveCarsToStorage(cars);
+    if (cars.length) {
+      saveCarsToStorage(cars);
+    }
   }, [cars]);
 
+
+  const currentCars = search ? search : cars;
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10; // Define the number of items per page here
-  const totalPages = Math.ceil(cars.length / itemsPerPage);
+  const totalPages = Math.ceil(currentCars.length / itemsPerPage);
 
   const handlePageChange = (selectedPage: number) => {
     setCurrentPage(selectedPage);
@@ -62,7 +66,7 @@ export const CarList = () => {
       <CarTable
         currentPage={currentPage}
         itemsPerPage={itemsPerPage}
-        cars={cars}
+        cars={currentCars}
       />
 
       <CarTablePagination

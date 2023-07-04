@@ -60,5 +60,23 @@ const removeCar = createAsyncThunk<{ index: number }, number>(
   }
 );
 
+interface ISearchCar {
+  search: Car[]
+}
 
-export { getCars, editCar, addCar, removeCar };
+const setSearchResult = createAsyncThunk<ISearchCar, ISearchCar>(
+  ActionType.SET_SEARCH_RESULT,
+  async ({ search }) => {
+    return { search };
+  }
+);
+
+const removeSearchResult = createAsyncThunk(
+  ActionType.REMOVE_SEARCH_RESULT,
+  () => {
+  }
+);
+
+
+
+export { getCars, editCar, addCar, removeCar, setSearchResult, removeSearchResult };

@@ -35,7 +35,7 @@ const CarTable: React.FC<CarTableProps> = ({
     return (
       <Alert status="info">
         <AlertIcon />
-        <AlertDescription>There are no cars yet</AlertDescription>
+        <AlertDescription>No cars have been found</AlertDescription>
       </Alert>
     );
   }
