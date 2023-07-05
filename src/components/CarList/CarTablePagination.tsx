@@ -32,10 +32,10 @@ const CarTablePagination: React.FC<CarTablePaginationProps> = ({
           </Button>
 
           <Button onClick={onSelectPage} w="40" >
-            <Text w="8">Page:</Text>
-            <Text w="8">{currentPage}</Text>
-            <Text w="4" mr="2">of: </Text>
-            <Text w="8">{totalPages}</Text>
+            <Text w="10" textAlign="start">Page:</Text>
+            <Text w="6" textAlign="center" marginRight="1">{currentPage}</Text>
+            <Text w="6" textAlign="start">of: </Text>
+            <Text w="6" textAlign="center">{totalPages}</Text>
           </Button>
 
           <Button
