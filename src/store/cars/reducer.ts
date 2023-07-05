@@ -43,7 +43,22 @@ const reducer = createReducer(initialState, (builder) => {
       ),
       (state, action) => {
         state.loading = false;
-        state.cars[action.payload.index] = action.payload.car;
+        state.cars = state.cars.map(car => {
+          if (car.id === action.payload.car.id) {
+            return action.payload.car;
+          } else {
+            return car;
+          }
+        })
+        if (state.search) {
+          state.search = state.search.map(car => {
+            if (car.id === action.payload.car.id) {
+              return action.payload.car;
+            } else {
+              return car;
+            }
+          })
+        }
       }
     )
 
@@ -62,6 +77,9 @@ const reducer = createReducer(initialState, (builder) => {
       (state, action) => {
         state.loading = false;
         state.cars = state.cars.filter((car) => car.id !== action.payload.id);
+        if (state.search) {
+          state.search = state.search.filter((car) => car.id !== action.payload.id);
+        }
       }
     )
 

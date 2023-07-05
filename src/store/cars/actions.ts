@@ -30,21 +30,12 @@ const getCars = createAsyncThunk<IGetCarsResponse>(
 );
 
 
-export interface IEditCar {
-  car: Car,
-  index: number
-}
-
-const editCar = createAsyncThunk<IEditCar, IEditCar>(
+const editCar = createAsyncThunk<{ car: Car }, { car: Car }>(
   ActionType.EDIT_CAR,
-  async ({ car, index }) => {
-    return { car, index };
+  async ({ car }) => {
+    return { car };
   }
 );
-
-export interface IAddCar {
-  car: Car
-}
 
 const addCar = createAsyncThunk<{ car: Car }, { car: Car }>(
   ActionType.ADD_CAR,

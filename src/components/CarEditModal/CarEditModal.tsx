@@ -20,7 +20,6 @@ import { validateCar } from '../../utils/validation/validation';
 
 interface CarEditModalProps {
   car: Car;
-  index: number;
   onSave: (editedCar: Car) => void;
   onClose: () => void;
 }

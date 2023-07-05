@@ -78,8 +78,8 @@ const CarTable: React.FC<CarTableProps> = ({
         </Tr>
       </Thead>
       <Tbody h="100%">
-        {displayedCars.map((car, index) => (
-          <CarTableRow key={car.id} car={car} index={index} />
+        {displayedCars.map((car) => (
+          <CarTableRow key={car.id} car={car} />
         ))}
       </Tbody>
     </Table>

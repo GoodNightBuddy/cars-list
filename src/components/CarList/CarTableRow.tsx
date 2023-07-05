@@ -22,11 +22,10 @@ import { carsActionCreator } from '../../store/action';
 import CarEditModal from '../CarEditModal/CarEditModal';
 
 interface CarTableRowProps {
-  car: Car;
-  index: number;
+  car: Car
 }
 
-const CarTableRow: React.FC<CarTableRowProps> = ({ car, index }) => {
+const CarTableRow: React.FC<CarTableRowProps> = ({ car}) => {
   const rowBorderColor = useColorModeValue('gray.200', 'white');
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
@@ -48,7 +47,7 @@ const CarTableRow: React.FC<CarTableRowProps> = ({ car, index }) => {
 
   const handleSaveEdit = (editedCar: Car) => {
     setEditModalOpen(false);
-    dispatch(carsActionCreator.editCar({ car: editedCar, index }));
+    dispatch(carsActionCreator.editCar({ car: editedCar }));
   };
 
   const handleCancelEdit = () => {
@@ -94,7 +93,6 @@ const CarTableRow: React.FC<CarTableRowProps> = ({ car, index }) => {
       {editModalOpen && (
         <CarEditModal
           car={car}
-          index={index}
           onSave={handleSaveEdit}
           onClose={handleCancelEdit}
         />
